@@ -15,6 +15,7 @@ interface IRoomShare {
     struct Rent {
         uint id;
         uint rId;
+        uint yearOfRent;
         uint checkInDate;
         uint checkOutDate;
         address renter;
@@ -42,7 +43,7 @@ interface IRoomShare {
     
     function shareRoom( string calldata name, string calldata location, uint price ) external;
 
-    function rentRoom(uint _roomId, uint checkInDate, uint checkOutDate) payable external;
+    function rentRoom(uint _roomId, uint year, uint checkInDate, uint checkOutDate) payable external;
 
 
 
@@ -57,6 +58,6 @@ interface IRoomShare {
     // optional 2
     // caution: 변수의 저장공간에 유의한다.
     // 첫날부터 시작해 함수를 실행한 날짜까지 isRented 필드의 초기화를 진행한다.
-    function initializeRoomShare(uint _roomId, uint day) external;
+    function initializeRoomShare(uint _roomId) external;
 }
 

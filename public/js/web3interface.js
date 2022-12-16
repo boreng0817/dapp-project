@@ -8,8 +8,7 @@ function DEBUGGER(s) {
 const mEthPrice = 1600;
 const currentYear = 2022;
 
-// const contract_address = "0xAB19576A50bec5C2621905fbc07880f6148A7E97"; // 따옴표 안에 주소값 복사 붙여넣기
-const contract_address = "0xdee3A64C2F3D5B6Cf6413Bc3bb83b113854E4e2f"; // 따옴표 안에 주소값 복사 붙여넣기
+const contract_address = "0xF759910bb2CB91D87B3e5A794f3584201987C4c6"; // 따옴표 안에 주소값 복사 붙여넣기
 
 
 const logIn = async () => {
@@ -199,8 +198,8 @@ const displayMyRents = async () => {
 		html += "<tr>";
 			html += "<td>" + myRents[i].id + "</td>"
 			html += "<td>" + myRents[i].rId + "</td>"
-			html += "<td>" + dateFromDay(currentYear,myRents[i].checkInDate).toDateString() + "</td>"
-			html += "<td>" + dateFromDay(currentYear,myRents[i].checkOutDate).toDateString() + "</td>"
+			html += "<td>" + dateFromDay(myRents[i].yearOfRent,myRents[i].checkInDate).toDateString() + "</td>"
+			html += "<td>" + dateFromDay(myRents[i].yearOfRent,myRents[i].checkOutDate).toDateString() + "</td>"
 		html += "</tr>";
 	}
 	document.getElementById('myRents').innerHTML = html;
@@ -292,13 +291,13 @@ const rentRoom = async () => {
   const jsonobj = returnOptionsJSON();
   const roomId = jsonobj.id;
 
-  await _rentRoom(roomId, checkInDate, checkOutDate, _price);
+  await _rentRoom(roomId, currentYear, checkInDate, checkOutDate, _price);
 
   await _updateUserBalance(user);
   _updateRents();
 }
 
-const _rentRoom = async (roomId, checkInDate, checkOutDate, price) => {
+const _rentRoom = async (roomId, currentYear, checkInDate, checkOutDate, price) => {
   // 체크인 날짜와 체크아웃 날짜의 차이, 하루당 대여 요금을 곱하여 컨트랙트로 송금한다. 
   // 대여가 성공하고 트랜잭션이 올바르면 알림 팝업을 띄운다.
   // 이더의 양이 맞지 않아서 트랜잭션이 종료되었을 경우에는 다른 팝업을 띄운다. (Solidity의 require과 관련됨)
@@ -310,7 +309,7 @@ const _rentRoom = async (roomId, checkInDate, checkOutDate, price) => {
   const balance = await getBalanceWei(user);
 
   try {
-    await contract.methods.rentRoom(roomId, checkInDate, checkOutDate).send({from:user, gas: 3000000, value: price * Math.pow(10, 15)})
+    await contract.methods.rentRoom(roomId, currentYear, checkInDate, checkOutDate).send({from:user, gas: 3000000, value: price * Math.pow(10, 15)})
     alert("대여");
   } catch (err) {
     if (price * Math.pow(10, 15) > balance) {
@@ -415,6 +414,5 @@ const _intializeRoomShare = async (_roomId) => {
   // 선택적 구현의 intializeRoomShare 함수는 첫날부터 시작해 web3interface.js 의 getDayOfYear 함수를 이용하여 함수를 실행한 날짜까지 초기화를 진행하는 함수입니다.(0 ~ today) 따라서 input의 day는 함수를 실행한 당일 날짜입니다.
 
   const contract = await getRoomShareContract();
-  const today = getDayOfYear(new Date());
-  await contract.methods.initializeRoomShare(_roomId, today).send({from:user, gas: 3000000});
+  await contract.methods.initializeRoomShare(_roomId).send({from:user, gas: 3000000});
 }

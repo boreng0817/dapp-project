@@ -75,11 +75,6 @@
 				"internalType": "uint256",
 				"name": "_roomId",
 				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "day",
-				"type": "uint256"
 			}
 		],
 		"name": "initializeRoomShare",
@@ -105,6 +100,11 @@
 			{
 				"internalType": "uint256",
 				"name": "_roomId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "year",
 				"type": "uint256"
 			},
 			{
@@ -164,6 +164,11 @@
 					},
 					{
 						"internalType": "uint256",
+						"name": "yearOfRent",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
 						"name": "checkInDate",
 						"type": "uint256"
 					},
@@ -206,6 +211,11 @@
 					{
 						"internalType": "uint256",
 						"name": "rId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "yearOfRent",
 						"type": "uint256"
 					},
 					{
@@ -288,6 +298,11 @@
 			},
 			{
 				"internalType": "uint256",
+				"name": "yearOfRent",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
 				"name": "checkInDate",
 				"type": "uint256"
 			},
@@ -354,6 +369,11 @@
 			{
 				"internalType": "uint256",
 				"name": "rId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "yearOfRent",
 				"type": "uint256"
 			},
 			{
