@@ -8,17 +8,18 @@ function DEBUGGER(s) {
 const mEthPrice = 1600;
 const currentYear = 2022;
 
-const contract_address = "0xAB19576A50bec5C2621905fbc07880f6148A7E97"; // 따옴표 안에 주소값 복사 붙여넣기
+// const contract_address = "0xAB19576A50bec5C2621905fbc07880f6148A7E97"; // 따옴표 안에 주소값 복사 붙여넣기
+const contract_address = "0xdee3A64C2F3D5B6Cf6413Bc3bb83b113854E4e2f"; // 따옴표 안에 주소값 복사 붙여넣기
 
 
 const logIn = async () => {
   const ID = prompt("choose your ID");
 
   // 개발 시 (ganache)
-  web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+  // web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 
   // 과제 제출 시 (metamask)
-  // web3 = await metamaskRequest();
+  web3 = await metamaskRequest();
 
   user = await getAccountInfos(Number(ID));
 
@@ -248,11 +249,11 @@ const listAllRooms = async () => {
     }
     if(allRooms[i].isActive == false) 
 			continue;
-    const jsonstr = JSON.stringify(allRooms[i]).replace(" ","+");
+    const jsonstr = JSON.stringify(allRooms[i]).replaceAll(" ","+");
 		html += `<option value=${jsonstr}>`;
 			html += allRooms[i].id + " | "
 			html += allRooms[i].name + " | "
-			html += allRooms[i].location.replace("+"," ") + " | "
+			html += allRooms[i].location.replaceAll("+"," ") + " | "
 			html += allRooms[i].isActive + " | "
 			html += allRooms[i].price + " | "
 			html += allRooms[i].owner.slice(0,17)+"..."
